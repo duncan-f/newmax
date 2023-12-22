@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "proxy": "https://www.wildberries.ru",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"

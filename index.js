@@ -14,6 +14,11 @@ app.use(cors());
 
 app.get("/", async (req, res) => {
   try {
+    res.header(
+      "User-Agent",
+      "Mozilla/5.0 (X11; Linux x86_64; rv:120.0) Gecko/20100101 Firefox/120.0",
+    );
+    res.header("Access-Control-Allow-Origin", "*");
     const url = "https://www.wildberries.ru/catalog/146972802/detail.aspx";
 
     const response = await axios.get(url);
@@ -23,7 +28,9 @@ app.get("/", async (req, res) => {
     const $ = cheerio.load(htmlContent);
 
     // Get all the stapled cards in the slider
-    const stapledCards = $(".swiper-wrapper .swiper-slide");
+    const stapledCards = $("#app");
+
+    console.log(stapledCards);
 
     // Array to store the results
     const results = [];
@@ -32,6 +39,8 @@ app.get("/", async (req, res) => {
     stapledCards.each((index, element) => {
       const cardUrl = $(element).find(".j-card-item").attr("href");
       const cardRemnantsText = $(element).find(".card-sale").text().trim();
+
+      console.log(index, element);
 
       // Extract remnants value from text (e.g., "Остаток: 5 шт.")
       const remnantsMatch = cardRemnantsText.match(/Остаток: (\d+) шт\./);
